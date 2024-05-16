@@ -69,6 +69,9 @@ class CurrencyConverter:
         self.result_label.grid(row=5, column=0, padx=10, pady=10)
 
 
+        command_textbox = tksc.ScrolledText(root, height=5, width=30)
+        command_textbox.grid(row=5, column=0)
+
 
         self.file_btn = ttk.Button(root, text="Save to file..", command=do_command)
         self.file_btn.grid(row=9, column=1, padx=20, pady=10)
