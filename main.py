@@ -27,24 +27,24 @@ def mSave():
 root = tk.Tk()
 root.title("URL Checker")
 
-frame_URL = tk.Frame(root, pady=10, bg="black")
+frame_URL = tk.Frame(root, pady=10, bg="pink1")
 frame_URL.pack()
 
-url_label = tk.Label(frame_URL, text="Enter a URL of interest: ", compound="center", font=("comic sans", 14), bd=0, relief=tk.FLAT, cursor="heart", fg="mediumpurple3", bg="black")
+url_label = tk.Label(frame_URL, text="ENTER URL NOW!: ", compound="center", font=("comic sans", 14), bd=0, relief=tk.FLAT, cursor="heart", fg="maroon1", bg="hotpink1")
 url_label.pack(side=tk.LEFT)
 url_entry = tk.Entry(frame_URL, font=("comic sans", 14))
 url_entry.pack(side=tk.LEFT)
 
-frame = tk.Frame(root, bg="black")
+frame = tk.Frame(root, bg="pink")
 frame.pack()
 
 command_textbox = tksc.ScrolledText(frame, height=10, width=100)
 command_textbox.pack()
 
-ping_btn = tk.Button(frame, text="Check URL", command=do_command)
+ping_btn = tk.Button(frame, text="CLICK MEEEEEEEEEEEEEE", command=do_command, cursor="heart", fg="deeppink2", bg="thistle1")
 ping_btn.pack()
 
-save_btn = tk.Button(frame, text="Save Results", command=mSave)
+save_btn = tk.Button(frame, text="SAVE ME", command=mSave, cursor="heart", fg="deeppink2", bg="thistle1")
 save_btn.pack()
 
 root.mainloop()
