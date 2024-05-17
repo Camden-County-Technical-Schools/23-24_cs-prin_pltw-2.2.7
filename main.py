@@ -13,8 +13,23 @@ from tkinter.filedialog import asksaveasfilename
 from tkinter import ttk
 
 
-def do_command():
-    subprocess.call("ping localhost")
+def do_command(command):
+    global command_textbox, amount_entry
+
+    # If url_entry is blank, use localhost IP address 
+    url_val = CurrencyConverter.amount_entry.get()
+    if (len(url_val) == 0):
+        # url_val = "127.0.0.1"
+        url_val = "::1"
+    command_textbox.delete(1.0, tk.END)
+    command_textbox.insert(tk.END, command + " working....\n")
+    command_textbox.update()
+
+    p = subprocess.Popen(command + ' '+ url_val, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True) #v2
+
+    cmd_results, cmd_errors = p.communicate()
+    command_textbox.insert(tk.END, cmd_results)
+    command_textbox.insert(tk.END, cmd_errors)
 
 #root = tk.Tk()
 #frame = tk.Frame(root)
@@ -58,7 +73,7 @@ class CurrencyConverter:
         self.from_currency_combobox.grid(row=1, column=1, padx=10, pady=10)
         self.from_currency_combobox.current(0)
 
-        self.convert_button = ttk.Button(root, text="GO", command=do_command)
+        self.convert_button = ttk.Button(root, text="GO", command=do_command("ping -c5"))
         self.convert_button.grid(row=4, column=0, columnspan=2, padx=10, pady=10)
 
         #self.white_frame = ttk.Label(root, text="Test", background="white") #width=300, height=400)
