@@ -22,7 +22,7 @@ def do_command(command):
     command_textbox.insert(tk.END, command + " working....\n")
     command_textbox.update()
 
-    p = subprocess.Popen(command + ' ::1', stdout=subprocess.PIPE, stderr=subprocess.PIPE) #v2
+    p = subprocess.Popen(command + ' ::1', stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell = True) #v2
 
     cmd_results, cmd_errors = p.communicate()
     command_textbox.insert(tk.END, cmd_results)
