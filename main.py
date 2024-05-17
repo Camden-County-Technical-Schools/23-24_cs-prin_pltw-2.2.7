@@ -14,7 +14,7 @@ from tkinter import ttk
 
 
 def do_command():
-    subprocess.call("ping localhost")
+    subprocess.call("ping -c10 localhost", shell=True)
 
 #root = tk.Tk()
 #frame = tk.Frame(root)
