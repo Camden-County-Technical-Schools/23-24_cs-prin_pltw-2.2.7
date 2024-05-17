@@ -61,8 +61,19 @@ nslookup_check.grid(row=6,column=1)
 
 ######################################################code for doing the selected command.
 def do_command():
-    if ping_selected == 1:
-        subprocess.call("ping localhost")
+    command = "Errrmmm what the sigma.  chat is this real?"
+    if ping_selected.var == 1:
+        command="ping -c5"
+
+    T.delete(1.0, tk.END)
+    T.insert(tk.END, command + " working....\n")
+    T.update()
+
+    p = subprocess.Popen(command + ' ::1', stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True) #v2
+
+    cmd_results, cmd_errors = p.communicate()
+    T.insert(tk.END, cmd_results)
+    T.insert(tk.END, cmd_errors)
 #####################################################Button code exists by default
 
 
@@ -72,7 +83,8 @@ proceed_btn.grid(row=7,column=1)
 
 ##################################################Text widget where output will go
 # Create text widget and specify size.
-T = tksc.ScrolledText(frame, height = 10, width = 20)
+global T
+T = tksc.ScrolledText(frame, height = 10, width = 40)
 
 T.grid(row=5,column=0)
 
