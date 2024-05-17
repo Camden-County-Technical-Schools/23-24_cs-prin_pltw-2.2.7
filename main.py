@@ -6,16 +6,25 @@ import tkinter as tk
 import tkinter.scrolledtext as tksc
 from tkinter import filedialog
 from tkinter.filedialog import asksaveasfilename
+
+
+#window = tk.Tk()
+
 from tkinter import ttk
 
 
 def do_command():
     subprocess.call("ping localhost")
 
+#root = tk.Tk()
+#frame = tk.Frame(root)
+#frame.pack()
+
 # set up button to run the do_command function
 
 #################################################################################################################
-
+#import tkinter as tk
+#from tkinter import ttk
 
 class CurrencyConverter:
     def __init__(self, root):
@@ -52,12 +61,20 @@ class CurrencyConverter:
         self.convert_button = ttk.Button(root, text="GO", command=do_command)
         self.convert_button.grid(row=4, column=0, columnspan=2, padx=10, pady=10)
 
-        self.white_frame = ttk.Label(root, text="Test", background="white") #,width=300, height=400)
-        self.white_frame.grid(row=5, column=1, padx=10, pady=10)
+        #self.white_frame = ttk.Label(root, text="Test", background="white") #width=300, height=400)
+        #self.white_frame.grid(row=5, column=1, padx=10, pady=10)
+
+
+        self.result_label = ttk.Label(root, text="Result:", background="dark red", foreground="white")
+        self.result_label.grid(row=5, column=0, padx=10, pady=10)
+
+
+        command_textbox = tksc.ScrolledText(root, height=5, width=30)
+        command_textbox.grid(row=5, column=0)
 
 
         self.file_btn = ttk.Button(root, text="Save to file..", command=do_command)
-        self.file_btn.grid(row=6, column=1, padx=10, pady=10)
+        self.file_btn.grid(row=9, column=1, padx=20, pady=10)
 
         
 def main():
