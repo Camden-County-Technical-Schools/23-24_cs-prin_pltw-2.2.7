@@ -3,6 +3,7 @@
 
 import subprocess
 import tkinter as tk
+from tkinter import *
 import tkinter.scrolledtext as tksc
 from tkinter import filedialog
 from tkinter.filedialog import asksaveasfilename
@@ -42,9 +43,9 @@ url_entry.pack(side=tk.LEFT)
 
 
 #default off values
-ping_selected=0
-nmap_selected=0
-nslookup_selected=0
+ping_selected = IntVar()
+nmap_selected = IntVar()
+nslookup_selected = IntVar()
 
 #checkboxes themselves
 #ping
@@ -62,7 +63,7 @@ nslookup_check.grid(row=6,column=1)
 ######################################################code for doing the selected command.
 def do_command():
     command = "Errrmmm what the sigma.  chat is this real?"
-    if ping_selected.var == 1:
+    if ping_selected.get() == 1:
         command="ping -c5"
 
     T.delete(1.0, tk.END)
