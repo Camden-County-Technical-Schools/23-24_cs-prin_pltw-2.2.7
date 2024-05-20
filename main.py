@@ -74,7 +74,7 @@ def mSave():
   file.write(text_to_save)
   file.close()
 
-save_btn = tk.Button(frame, text="SAVE", command=mSave())
+save_btn = tk.Button(frame, text="SAVE", command=lambda:mSave())
 save_btn.pack()
 
 root.mainloop()
