@@ -36,8 +36,22 @@ def do_command(combobox, amount_entry, command_textbox):
 
 def do_save():
     print("Saving ...")
-    return
+    filename = asksaveasfilename(defaultextension='.txt',filetypes = (('Text files', '*.txt'),('Python files', '*.py *.pyw'),('All files', '*.*')))
+    if filename is None:
+        file = open (filename, mode = 'w')
+        text_to_save = command_textbox.get("1.0", tk.END)
+  
+        file.write(text_to_save)
+        file.close()
 
+
+
+
+
+
+
+
+####
 class CurrencyConverter:
     def __init__(self, root):
         self.root = root
@@ -57,20 +71,20 @@ class CurrencyConverter:
 
         # Create labels, entry, and comboboxes
         self.amount_label = ttk.Label(root, text="Input Text:", background="dark red", foreground="white")
-        self.amount_label.grid(row=0, column=0, padx=10, pady=10)
+        self.amount_label.grid(row=0, column=0, padx=5, pady=10)
         self.amount_entry = ttk.Entry(root)
-        self.amount_entry.grid(row=0, column=1, padx=10, pady=10)
+        self.amount_entry.grid(row=0, column=0, padx=5, pady=10)
 
         self.from_currency_label = ttk.Label(root, text="Select a tool to use:", background="dark red", foreground="white")
         self.from_currency_label.grid(row=1, column=0, padx=10, pady=10)
         self.from_currency_combobox = ttk.Combobox(root, values=[" ", "ping -c5", "nmap", "nslookup"])
-        self.from_currency_combobox.grid(row=1, column=1, padx=10, pady=10)
+        self.from_currency_combobox.grid(row=1, column=0, padx=10, pady=10)
         self.from_currency_combobox.current(0)
 
         self.result_label = ttk.Label(root, text="Result:", background="dark red", foreground="white")
         self.result_label.grid(row=5, column=0, padx=10, pady=10)
 
-        self.command_textbox = tksc.ScrolledText(root, height=5, width=30)
+        self.command_textbox = tksc.ScrolledText(root, height=5, width=40)
         self.command_textbox.grid(row=5, column=0)
 
         self.convert_button = ttk.Button(root, text="GO", command=lambda:do_command(self.from_currency_combobox,
@@ -81,7 +95,7 @@ class CurrencyConverter:
         #self.white_frame.grid(row=5, column=1, padx=10, pady=10)
 
         self.file_btn = ttk.Button(root, text="Save to file..", command=lambda:do_save())
-        self.file_btn.grid(row=9, column=1, padx=20, pady=10)
+        self.file_btn.grid(row=9, column=0, padx=20, pady=10)
 
         
 def main():
