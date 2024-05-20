@@ -62,7 +62,7 @@ nslookup_check.grid(row=6,column=1)
 ######################################################code for doing the selected command.
 def do_command():
     command = "Errrmmm what the sigma.  chat is this real?"
-    if ping_selected.var == 1:
+    if ping_selected == 1:
         command="ping -c5"
 
     T.delete(1.0, tk.END)
@@ -89,6 +89,12 @@ T = tksc.ScrolledText(frame, height = 10, width = 40)
 T.grid(row=5,column=0)
 
 T.insert(tk.END, "output")
+
+
+
+######### set up button to run the do_command function
+proceed_btn = tk.Button(frame, text="Save output to file", command=do_command)
+proceed_btn.grid(row=8,column=1)
 
 
 root.mainloop()
