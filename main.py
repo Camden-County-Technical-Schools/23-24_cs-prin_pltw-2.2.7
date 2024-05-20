@@ -25,6 +25,7 @@ def mSave():
             file.write(text_to_save)
 
 root = tk.Tk()
+root.geometry("900x500")
 root.title("URL Checker")
 
 frame_URL = tk.Frame(root, pady=10, bg="pink1")
@@ -46,6 +47,42 @@ ping_btn.pack()
 
 save_btn = tk.Button(frame, text="SAVE ME", command=mSave, cursor="heart", fg="deeppink2", bg="thistle1")
 save_btn.pack()
+
+# Create the main application window
+"""root = tk.Tk()"""
+root.title("")
+root.configure(bg="#FF0000")
+# Function to execute when the button is clicked
+def quit_program():
+    root.quit()
+
+# Create a button widget to quit the program
+quit_button = tk.Button(root, text="Click to Self Destruct", command=quit_program)
+quit_button.pack()  # Place the button in the window
+quit_button.configure(fg="deeppink1")
+
+
+
+# Function to execute when an option is selected from the dropdown menu
+def on_select(value):
+    messagebox.showinfo("Selection", f"You selected: {value}")
+
+# Create the main application window
+"""root = tk.Tk()"""
+root.title("man")
+root.geometry("150x30")
+root.configure(bg="#FFC0CB")
+# Define options for the dropdown menu
+options = ["ping", "nslookup", "nmap"]
+
+# Create a Tkinter variable to store the selected option
+selected_option = tk.StringVar(root)
+selected_option.set(options[0])  # Set default value
+
+# Create a dropdown menu
+dropdown = tk.OptionMenu(root, selected_option, *options, command=on_select)
+dropdown.configure(fg="deeppink1")
+dropdown.pack()
 
 root.mainloop()
 
