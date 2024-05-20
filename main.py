@@ -83,7 +83,7 @@ def do_command():
         url_val = "::1"
     
         # use url_val 
-        p = subprocess.Popen(command + ' ::1', stdout=subprocess.PIPE, stderr=subprocess.PIPE) #v2
+   
 
 
 
@@ -93,7 +93,7 @@ def do_command():
     T.insert(tk.END, command + " working....\n")
     T.update()
 
-    p = subprocess.Popen(command + ' ::1', stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True) #v2
+    p = subprocess.Popen(command + " " + url_val, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True) #v2
 
     cmd_results, cmd_errors = p.communicate()
     T.insert(tk.END, cmd_results)
