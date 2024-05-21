@@ -12,7 +12,6 @@ def do_command(command):
     global command_textbox,url_entry
     url_val = url_entry.get()
     if (len(url_val) == 0):
-        # url_val = "127.0.0.1"
         url_val = "::1"
     command_textbox.delete(1.0, tk.END)
     command_textbox.insert(tk.END, command + " working....\n")
@@ -23,12 +22,24 @@ def do_command(command):
     cmd_results, cmd_errors = p.communicate()
     command_textbox.insert(tk.END, cmd_results)
     command_textbox.insert(tk.END, cmd_errors)
-    command_textbox= tksc.ScrolledText(root,width=100,height=100 ) 
+    command_textbox.update()
+# Save function.
+def mSave():
+  filename = asksaveasfilename(defaultextension='.txt',filetypes = (('Text files', '*.txt'),
+  ('Python files', '*.py *.pyw'),('All files', '*.*')))
+  if filename is None:
+    return
+  file = open (filename,mode ='w')
+  text_to_save = command_textbox.get("1.0", tk.END)
+  
+  file.write(text_to_save)
+  file.close()
 
 
 root = tk.Tk()
-root.title('Web searcher ')
+root.title('Web Searcher ')
 root.geometry("960x540")
+root.configure(bg='light blue')
 frame = tk.Frame(root)
 frame.pack()
 #bg = PhotoImage(file="Web searcher.png")
@@ -45,7 +56,8 @@ blue_frame.pack(side=tk.LEFT, padx=50, pady=100)
 '''
 
 # creates the frame with label for the text box
-frame_URL = tk.Frame(root,  bg="black") # change frame color
+
+frame_URL = tk.Frame(root,bg="black") # change frame color
 frame_URL.pack()
 
 # decorative label
@@ -54,7 +66,7 @@ url_label = tk.Label(frame_URL, text="Enter website ",
     font=("comic sans", 14),
     bd=0, 
     relief=tk.FLAT, 
-    fg="mediumpurple3",
+    fg="light blue",
     #image= img ,
     bg="black",
       activebackground="gray")
@@ -70,8 +82,18 @@ nslookup_btn.pack(side=tk.RIGHT)
 frame = tk.Frame(root,  bg="black") # change frame color
 
 frame.pack()
-command_textbox = tksc.ScrolledText(frame, height=50, width=100)
+command_textbox = tksc.ScrolledText(frame, height=20, width=100)
 command_textbox.pack()
+
+save_btn = tk.Button(frame, text="Save", 
+    command=lambda:mSave(),
+    compound="bottom",
+    font=("comic sans", 12),
+    bd=0, 
+    relief="flat",
+    #image=img, 
+     activebackground="gray")
+save_btn.pack() 
 root.mainloop()
 # Adds an output box to GUI.
 
