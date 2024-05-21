@@ -12,7 +12,6 @@ def do_command(command):
     global command_textbox,url_entry
     url_val = url_entry.get()
     if (len(url_val) == 0):
-        # url_val = "127.0.0.1"
         url_val = "::1"
     command_textbox.delete(1.0, tk.END)
     command_textbox.insert(tk.END, command + " working....\n")
@@ -23,7 +22,7 @@ def do_command(command):
     cmd_results, cmd_errors = p.communicate()
     command_textbox.insert(tk.END, cmd_results)
     command_textbox.insert(tk.END, cmd_errors)
-    command_textbox= tksc.ScrolledText(root,width=100,height=100 ) 
+    command_textbox.update()
 
 
 root = tk.Tk()
