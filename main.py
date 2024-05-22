@@ -1,80 +1,96 @@
 # p227_starter_one_button_shell.py
-# Note this will not run in the code editor and must be downloaded
-
 import subprocess
 import tkinter as tk
 import tkinter.scrolledtext as tksc
 from tkinter import filedialog
 from tkinter.filedialog import asksaveasfilename
+from tkinter import ttk
 
-root = tk.Tk()
-frame = tk.Frame(root)
-frame.pack()
-
-# creates the frame with label for the text box
-frame_URL = tk.Frame(root, pady=10,  bg="yellow") # change frame color
-frame_URL.pack()
-
-# decorative label
-url_label = tk.Label(frame_URL, text="Enter a URL of interest: ", 
-    compound="center",
-    font=("comic sans", 14),
-    bd=0, 
-    relief=tk.FLAT,
-    fg="black",
-    bg="yellow")
-url_label.pack(side=tk.LEFT)
-url_entry= tk.Entry(frame_URL,  font=("comic sans", 14)) # change font
-url_entry.pack(side=tk.LEFT)
-
-frame = tk.Frame(root,  bg="yellow") # change frame color
-frame.pack()
-
-def do_command(command):
-    global command_textbox, url_entry
-    
-     # If url_entry is blank, use localhost IP address 
-    url_val = url_entry.get()
+def do_command(combobox, amount_entry, command_textbox):
+    # If url_entry is blank, use localhost IP address
+    url_val = amount_entry.get()
     if (len(url_val) == 0):
-        # url_val = "127.0.0.1"
         url_val = "::1"
-    
+
+    # clear the information from the output textbox
     command_textbox.delete(1.0, tk.END)
-    command_textbox.insert(tk.END, command + " working....\n")
+
+    # get the command from the combobox
+    command = combobox.get()
+    if (command == " "):
+        command_textbox.insert(tk.END, "Please select a tool!\n")
+        # if no command given, exit this function
+        return
+    else:
+        command_textbox.insert(tk.END, command + " working....\n")
     command_textbox.update()
 
-    # use url_val
-    p = subprocess.Popen(command + ' ' + url_val, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell = True) #v2
+    # execute the command
+    p = subprocess.Popen(command + ' ' + url_val, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True) #v2
 
+    # display information about the command in the output textbox
     cmd_results, cmd_errors = p.communicate()
     command_textbox.insert(tk.END, cmd_results)
     command_textbox.insert(tk.END, cmd_errors)
-
-command_textbox = tksc.ScrolledText(frame, height=10, width=100)
-command_textbox.pack()
-
-ping_btn = tk.Button(frame, text="ping", command=lambda:do_command("ping -c5"))
-ping_btn.pack()
-
-nmap_btn = tk.Button(frame, text="nmap", command=lambda:do_command("nmap"))
-nmap_btn.pack()
-
-nslookup_btn = tk.Button(frame, text="nslookup", command=lambda:do_command("nslookup"))
-nslookup_btn.pack()
-
-# save function
-
-def mSave():
-  filename = asksaveasfilename(defaultextension='.txt',filetypes = (('Text files', '*.txt'),('Python files', '*.py *.pyw'),('All files', '*.*')))
-  if filename is None:
     return
-  file = open (filename, mode = 'w')
-  text_to_save = command_textbox.get("1.0", tk.END)
+
+def do_save():
+    print("Saving ...")
+    filename = asksaveasfilename(defaultextension='.txt',filetypes = (('Text files', '*.txt'),('Python files', '*.py *.pyw'),('All files', '*.*')))
+    if filename is None:
+        file = open (filename, mode = 'w')
+        text_to_save = command_textbox.get("1.0", tk.END)
   
-  file.write(text_to_save)
-  file.close()
+        file.write(text_to_save)
+        file.close()
 
-save_btn = tk.Button(frame, text="SAVE", command=lambda:mSave())
-save_btn.pack()
+####
+class CurrencyConverter:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Commands")
 
-root.mainloop()
+        # Set window size and position it in the center of the screen
+        window_width = 400
+        window_height = 300
+        screen_width = root.winfo_screenwidth()
+        screen_height = root.winfo_screenheight()
+        x_coordinate = int((screen_width - window_width) / 2)
+        y_coordinate = int((screen_height - window_height) / 2)
+        self.root.geometry(f"{window_width}x{window_height}+{x_coordinate}+{y_coordinate}")
+
+        # Set background color to dark red
+        self.root.configure(bg="pink")
+
+        # Create labels, entry, and comboboxes
+        self.amount_label = ttk.Label(root, text="Input Text:", background="pink", foreground="white")
+        self.amount_label.grid(row=0, column=0, padx=5, pady=10)
+        self.amount_entry = ttk.Entry(root)
+        self.amount_entry.grid(row=0, column=0, padx=5, pady=10)
+
+        self.from_currency_label = ttk.Label(root, text="Select a tool to use:", background="pink", foreground="white")
+        self.from_currency_label.grid(row=1, column=0, padx=10, pady=10)
+        self.from_currency_combobox = ttk.Combobox(root, values=["Choose a command", "nmap", "nslookup", "ping -c5",  "traceroute", "whois"])
+        self.from_currency_combobox.grid(row=1, column=0, padx=10, pady=10)
+        self.from_currency_combobox.current(0)
+
+        self.result_label = ttk.Label(root, text="Result:", background="pink", foreground="white")
+        self.result_label.grid(row=5, column=0, padx=10, pady=10)
+
+        self.command_textbox = tksc.ScrolledText(root, height=5, width=40)
+        self.command_textbox.grid(row=5, column=0)
+
+        self.convert_button = ttk.Button(root, text="GO", command=lambda:do_command(self.from_currency_combobox,
+                                        self.amount_entry, self.command_textbox))
+        self.convert_button.grid(row=4, column=0, columnspan=2, padx=10, pady=10)
+
+        self.file_btn = ttk.Button(root, text="Save to file..", command=lambda:do_save())
+        self.file_btn.grid(row=9, column=0, padx=20, pady=10)
+
+def main():
+    root = tk.Tk()
+    app = CurrencyConverter(root)
+    root.mainloop()
+
+if __name__ == "__main__":
+    main()
