@@ -11,7 +11,7 @@ from tkinter.filedialog import asksaveasfilename
     # Modify the do_command function:
 #   to use the new button as needed
 def do_command(command):
-    global command_textbox
+    global command_textbox, url_entry
 
     url_val = url_entry.get()
     if (len(url_val) == 0):
@@ -28,23 +28,30 @@ def do_command(command):
     command_textbox.insert(tk.END, cmd_results)
     command_textbox.insert(tk.END, cmd_errors)
 
-    
 
+
+
+
+
+
+    
+#-------------
 root = tk.Tk()
 frame = tk.Frame(root)
 frame.pack()
 
 # Modifies the ping button parameters.
 ping_btn = tk.Button(frame, text="Check to see if a URL is up and active", 
-    command=lambda:do_command("ping"),
+    command=lambda:do_command("ping-c 5"),
     compound="center",
     font=("comic sans", 12),
     bd=0, 
     relief="flat",
     cursor="heart",
     bg="lightblue", activebackground="lightblue")
-ping_btn.pack() 
+ping_btn.pack()
 
+#---------------------------------------------------------------------------------
 
 
 frame_URL = tk.Frame(root, pady=10,  bg="lightblue") # change frame color
@@ -60,9 +67,8 @@ url_label = tk.Label(frame_URL, text="Enter a URL of interest: ",
     fg="mediumpurple3",
     bg="lightblue")
 url_label.pack(side=tk.LEFT)
-url_entry= tk.Entry(frame_URL,  font=("comic sans", 14)) # change font
+url_entry= tk.Entry(frame_URL,  font=("Comic sans", 14)) # change font
 url_entry.pack(side=tk.LEFT)
-
 
 
 frame = tk.Frame(root,  bg="lightblue") # change frame color
@@ -76,7 +82,7 @@ command_textbox.pack()
 def mSave():
   filename = asksaveasfilename(defaultextension='.txt',filetypes = (('Text files', '*.txt'),('Python files', '*.py *.pyw'),('All files', '*.*')))
   if filename is None:
-    return
+    return yes
   file = open (filename, mode = 'w')
   text_to_save = command_textbox.get("1.0", tk.END)
   
